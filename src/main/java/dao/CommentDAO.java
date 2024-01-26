@@ -1,4 +1,7 @@
-package comment;
+package dao;
+
+import com.study.connection.DBManager;
+import dto.Comment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,15 +17,7 @@ public class CommentDAO {
     private ResultSet rs;
 
     public CommentDAO() {
-        try {
-            String dbURL = "jdbc:mysql://localhost:3306/ebrainsoft_study?useUnicode=true&characterEncoding=UTF-8";
-            String dbID = "ebsoft";
-            String dbPassword = "ebsoft";
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        conn = DBManager.getConnection();
     }
 
     public String getDate() { // 댓글 작성일자 반환

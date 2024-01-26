@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="comment.CommentDAO" %>
-<%@ page import="comment.Comment" %>
-<%@ page import="board.BoardDAO" %>
+<%@ page import="dao.CommentDAO" %>
+<%@ page import="dto.Comment" %>
+<%@ page import="dao.BoardDAO" %>
 <%@ page import="java.io.PrintWriter" %>
-<jsp:useBean id="newComment" class="comment.Comment" scope="page"/>
+<jsp:useBean id="newComment" class="dto.Comment" scope="page"/>
 <jsp:setProperty name="newComment" property="boardId" param="boardId"/>
 <jsp:setProperty name="newComment" property="commentContent" param="commentContent"/>
 <jsp:setProperty name="newComment" property="commentDate"/>

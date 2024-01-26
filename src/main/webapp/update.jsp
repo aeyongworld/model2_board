@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="board.Board" %>
-<%@ page import="board.BoardDAO" %>
+<%@ page import="dto.Board" %>
+<%@ page import="dao.BoardDAO" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,13 +18,11 @@
         boardId = Integer.parseInt(request.getParameter("boardId"));
     }
     if (boardId == 0) {
-        PrintWriter script = response.getWriter();
-        script.println("<script>");
-        script.println("alert('유효하지 않은 글입니다.')");
-        script.println("location.href = 'board.jsp'");
-        script.println("</script>");
+        return;
     }
-    Board board = new BoardDAO().getBoard(boardId);
+
+    BoardDAO boardDAO = new BoardDAO();
+    Board board = boardDAO.getBoard(boardId);
 %>
 
 %>
@@ -50,7 +48,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <form method="post" action="updateAction.jsp?boardId=<%=boardId%>">
+        <form method="post" action="UpdateActionServlet?boardId=<%=boardId%>">
             <table class="table" style="text-align: left; border: 1px solid #245269">
                 <thead>
                 <tr>

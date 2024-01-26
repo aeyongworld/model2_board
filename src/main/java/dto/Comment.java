@@ -1,4 +1,4 @@
-package comment;
+package dto;
 
 public class Comment {
 

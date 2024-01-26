@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="board.Board" %>
-<%@ page import="board.BoardDAO" %>
-<%@ page import="comment.Comment" %>
-<%@ page import="comment.CommentDAO" %>
+<%@ page import="dto.Board" %>
+<%@ page import="dao.BoardDAO" %>
+<%@ page import="dto.Comment" %>
+<%@ page import="dao.CommentDAO" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,24 +21,11 @@
     <title>JSP 게시판</title>
 </head>
 <body>
-
-    <%
-    int boardId = Integer.parseInt(request.getParameter("boardId"));
-    if (request.getParameter("boardId") != null) {
-        boardId = Integer.parseInt(request.getParameter("boardId"));
-    }
-    if (boardId == 0) {
-        PrintWriter script = response.getWriter();
-        script.println("<script>");
-        script.println("alert('유효하지 않은 글입니다.')");
-        script.println("location.href = 'board.jsp'");
-        script.println("</script>");
-    }
-    Board board = new BoardDAO().getBoard(boardId);
-
-    List<Comment> comments = new CommentDAO().getCommentsForBoard(boardId);
-    %>
-
+<%
+    // 서블릿에서 전달한 데이터 받아오기
+    Board board = (Board) request.getAttribute("board");
+    List<Comment> comments = (List<Comment>) request.getAttribute("comments");
+%>
 <nav class ="navbar navbar-default">
     <div class="navbar-header"> <!-- 헤더 부분 -->
         <button type="button" class="navbar-toggle collapsed"
@@ -53,7 +40,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li><a href="main.jsp">메인</a> </li>
-            <li class="active"><a href="board.jsp">게시판</a> </li>
+            <li class="active"><a href="BoardServlet">게시판</a> </li>
         </ul>
     </div>
 </nav>
@@ -111,8 +98,8 @@
             <% } %>
             </tbody>
         </table>
-        <form method="post" action="addCommentAction.jsp">
-            <input type="hidden" name="boardId" value="<%= boardId %>">
+        <form method="post" action="AddCommentServlet">
+            <input type="hidden" name="boardId" value="<%=board.getBoardId() %>">
             <table border="0" cellpadding="3" cellspacing="0" width="100%">
                 <tr>
                     <td><textarea class="form-control" name="commentContent" style="width: 1000px" placeholder="댓글을 입력해 주세요." rows="2" required></textarea></td>
@@ -123,9 +110,9 @@
 
 
         <table align="center">
-            <a href="board.jsp" class="btn btn-default">목록</a>
-            <a href="update.jsp?boardId=<%=boardId%>" class="btn btn-primary">수정</a>
-            <a href="deleteAction.jsp?boardId=<%=boardId%>" class="btn btn-danger">삭제</a>
+            <a href="BoardServlet" class="btn btn-default">목록</a>
+            <a href="update.jsp?boardId=<%=board.getBoardId()%>" class="btn btn-primary">수정</a>
+            <a href="DeleteActionServlet?boardId=<%=board.getBoardId()%>" class="btn btn-danger">삭제</a>
         </table>
 
     </div>

@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li><a href="main.jsp">메인</a> </li>
-            <li class="active"><a href="board.jsp">게시판</a> </li>
+            <li class="active"><a href="BoardServlet">게시판</a> </li>
         </ul>
     </div>
 </nav>
@@ -31,8 +31,8 @@
 </div>
 <div class="container">
     <div class="row">
-        <form method="post" action="writeAction.jsp" enctype="multipart/form-data">
-            <table class="table" style="text-align: left; border: 1px solid #245269">
+        <form method="post" action="WriteActionServlet" enctype="application/x-www-form-urlencoded">
+        <table class="table" style="text-align: left; border: 1px solid #245269">
                 <thead>
                 <tr>
                     <th colspan="2" style="background-color: #2aabd2; text-align: center;">게시판 글쓰기</th>
@@ -41,13 +41,14 @@
                 <table class="table" style="text-align: left; border: 1px solid #999999">
                     <tr>
                         <td><strong>카테고리</strong></td>
-                        <td><select name="category" id="category" required>
-                            <option value="" selected disabled hidden>카테고리 선택</option>
+                        <td><select id="category" name="category" required>
+                            <option value=""  disabled selected>카테고리 선택</option>
                             <option value="1">JAVA</option>
                             <option value="2">JSP</option>
                             <option value="3">Servlet</option>
                             <option value="4">eBrain</option>
-                        </select> </td>
+                        </select>
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>작성자</strong></td>
@@ -77,16 +78,19 @@
                     </tr>
                 </table>
             </table>
-            <input type="button" class="btn btn-default pull-left" onclick="moveToBoard()" value="취소">
+            <input type="button" class="btn btn-default pull-left" onclick="cancelWrite()" value="취소">
             <input type="submit" class="btn btn-primary pull-right" value="저장">
         </form>
     </div>
 </div>
 <script>
-    function moveToBoard() {
-        window.location.href = 'board.jsp'; // board.js로 이동(목록 페이지)
+    function cancelWrite() { // 취소 버튼 눌렀을 때(작성 취소)
+        if (confirm('작성을 취소하시겠습니까?')) {
+            window.location.href = 'BoardServlet'; // board.js로 이동(목록 페이지)
+        }
     }
 </script>
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 </body>

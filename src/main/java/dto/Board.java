@@ -1,4 +1,4 @@
-package board;
+package dto;
 
 
 public class Board {

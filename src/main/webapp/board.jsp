@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter" %>
-<%@ page import="board.BoardDAO"%>
-<%@ page import="board.Board"%>
-<%@page import="java.util.ArrayList" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="dto.Board" %>
+<%@ page import="dao.BoardDAO" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,32 +16,31 @@
     </style>
 </head>
 <body>
-    <%
-        int pageNumber = 1;
-        if (request.getParameter("pageNumber") != null) {
-            pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-        }
-    %>
-<nav class ="navbar navbar-default">
-    <div class="navbar-header"> <!-- 헤더 부분 -->
+<%
+    // 서블릿에서 전달한 데이터 받아오기
+//    BoardDAO boardDAO = (BoardDAO) request.getAttribute("boardDAO");
+    ArrayList<Board> list = (ArrayList<Board>) request.getAttribute("boardList");
+%>
+
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed"
                 data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
                 aria-expand="false">
-            <span class ="icon-bar"></span>
-            <span class ="icon-bar"></span>
-            <span class ="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
         </button>
-        <a class ="navbar-brand" href="main.jsp">JSP 게시판</a>
+        <a class="navbar-brand" href="main.jsp">JSP 게시판</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li><a href="main.jsp">메인</a> </li>
-            <li class="active"><a href="board.jsp">게시판</a> </li>
+            <li class="active"><a href="BoardServlet">게시판</a> </li>
         </ul>
     </div>
 </nav>
-    <div class="col-lg-4"></div>
-</div>
+
 <div class="container">
     <div class="row">
         <table class="table table-striped" style="text-align: center; border: 1px solid #245269">
@@ -57,37 +55,24 @@
             </tr>
             </thead>
             <tbody>
-
-                <%
-                    BoardDAO boardDAO = new BoardDAO();
-                    ArrayList<Board> list = boardDAO.getList(pageNumber);
-                    for(int i=0; i < list.size(); i++) {
-//                        System.out.println("DEBUG: board_id for index " + i + ": " + list.get(i).getBoardId());
-                %>
-                <tr>
-                    <td><%= list.get(i).getCategoryName()%></td>
-                    <td><a href="view.jsp?boardId=<%= list.get(i).getBoardId() %>"><span style="text-decoration: underline;"><%= list.get(i).getTitle()%></span></a></td>
-                    <td><%= list.get(i).getUsername()%></td>
-                    <td><%= list.get(i).getViewCount()%></td>
-                    <td><%= list.get(i).getCreatedDate().substring(0, 4)+ "." + list.get(i).getCreatedDate().substring(5, 7) + "." + list.get(i).getCreatedDate().substring(8, 10) + " " + list.get(i).getCreatedDate().substring(11,16)%></td>
-                    <td><%= list.get(i).getUpdatedDate().substring(0, 4)+ "." + list.get(i).getUpdatedDate().substring(5, 7) + "." + list.get(i).getUpdatedDate().substring(8, 10) + " " + list.get(i).getUpdatedDate().substring(11,16)%></td>
-                </tr>
-                <%
+            <%
+                if(list != null) {
+                for(int i=0; i < list.size(); i++) {
+            %>
+            <tr>
+                <td><%= list.get(i).getCategoryName() %></td>
+                <td><a href="ViewServlet?boardId=<%= list.get(i).getBoardId() %>"><span style="text-decoration: underline;"><%= list.get(i).getTitle() %></span></a></td>
+                <td><%= list.get(i).getUsername() %></td>
+                <td><%= list.get(i).getViewCount() %></td>
+                <td><%= list.get(i).getCreatedDate().substring(0, 16) %></td>
+                <td><%= list.get(i).getUpdatedDate().substring(0, 16) %></td>
+            </tr>
+            <%
                     }
-                %>
+                }
+            %>
             </tbody>
         </table>
-        <%
-            if(pageNumber != 1) {
-        %>
-            <a href="board.jsp?pageNumber=<%=pageNumber - 1%>" class="btn btn-success btn-arrow-left">이전</a>
-        <%
-            } if(boardDAO.nextPage(pageNumber + 1)) {
-        %>
-        <a href="board.jsp?pageNumber=<%=pageNumber + 1%>" class="btn btn-success btn-arrow-right">다음</a>
-        <%
-            }
-        %>
         <a href="write.jsp" class="btn btn-primary pull-right">등록</a>
     </div>
 </div>
@@ -96,3 +81,5 @@
 <script src="js/bootstrap.js"></script>
 </body>
 </html>
+
+

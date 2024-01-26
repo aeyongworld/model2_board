@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="board.BoardDAO" %>
+<%@ page import="dao.BoardDAO" %>
 <%@ page import="java.io.PrintWriter" %>
-<jsp:useBean id="board" class="board.Board" scope="page"/>
+<jsp:useBean id="board" class="dto.Board" scope="page"/>
 <jsp:setProperty name="board" property="boardId"/>
 <jsp:setProperty name="board" property="categoryId"/>
 <jsp:setProperty name="board" property="username"/>
