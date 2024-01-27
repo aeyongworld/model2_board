@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter" %>
 <%@ page import="dto.Board" %>
-<%@ page import="dao.BoardDAO" %>
 <%@ page import="dto.Comment" %>
-<%@ page import="dao.CommentDAO" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,7 +19,7 @@
 </head>
 <body>
 <%
-    // 서블릿에서 전달한 데이터 받아오기
+    // 커맨드에서 전달한 데이터 받아오기
     Board board = (Board) request.getAttribute("board");
     List<Comment> comments = (List<Comment>) request.getAttribute("comments");
 %>
@@ -40,7 +37,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li><a href="main.jsp">메인</a> </li>
-            <li class="active"><a href="BoardServlet">게시판</a> </li>
+            <li class="active"><a href="ControllerServlet?commandType=board">게시판</a></li>
         </ul>
     </div>
 </nav>
@@ -98,7 +95,7 @@
             <% } %>
             </tbody>
         </table>
-        <form method="post" action="AddCommentServlet">
+        <form method="post" action="ControllerServlet?commandType=addComment">
             <input type="hidden" name="boardId" value="<%=board.getBoardId() %>">
             <table border="0" cellpadding="3" cellspacing="0" width="100%">
                 <tr>
@@ -107,14 +104,11 @@
                 </tr>
             </table>
         </form>
-
-
         <table align="center">
             <a href="BoardServlet" class="btn btn-default">목록</a>
             <a href="update.jsp?boardId=<%=board.getBoardId()%>" class="btn btn-primary">수정</a>
-            <a href="DeleteActionServlet?boardId=<%=board.getBoardId()%>" class="btn btn-danger">삭제</a>
+            <a href="ControllerServlet?commandType=delete&boardId=<%=board.getBoardId()%>" class="btn btn-danger">삭제</a>
         </table>
-
     </div>
 </div>
     </script>

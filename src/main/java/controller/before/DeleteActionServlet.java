@@ -1,4 +1,4 @@
-package controller;
+package controller.before;
 
 import dao.BoardDAO;
 

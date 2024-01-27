@@ -1,4 +1,4 @@
-package controller;
+package controller.before;
 
 import dao.BoardDAO;
 
@@ -42,4 +42,6 @@ public class WriteActionServlet extends HttpServlet {
             out.println("<script>location.href = 'BoardServlet';</script>");
         }
     }
+
+
 }

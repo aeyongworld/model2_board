@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,7 +22,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li><a href="main.jsp">메인</a> </li>
-            <li class="active"><a href="BoardServlet">게시판</a> </li>
+            <li class="active"><a href="ControllerServlet?commandType=board">게시판</a> </li>
         </ul>
     </div>
 </nav>
@@ -31,7 +30,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <form method="post" action="WriteActionServlet" enctype="application/x-www-form-urlencoded">
+        <form method="post" action="ControllerServlet?commandType=write" enctype="application/x-www-form-urlencoded">
         <table class="table" style="text-align: left; border: 1px solid #245269">
                 <thead>
                 <tr>
@@ -86,7 +85,7 @@
 <script>
     function cancelWrite() { // 취소 버튼 눌렀을 때(작성 취소)
         if (confirm('작성을 취소하시겠습니까?')) {
-            window.location.href = 'BoardServlet'; // board.js로 이동(목록 페이지)
+            window.location.href = 'ControllerServlet?commandType=board';
         }
     }
 </script>

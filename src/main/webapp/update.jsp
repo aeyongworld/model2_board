@@ -17,10 +17,6 @@
     if (request.getParameter("boardId") != null) {
         boardId = Integer.parseInt(request.getParameter("boardId"));
     }
-    if (boardId == 0) {
-        return;
-    }
-
     BoardDAO boardDAO = new BoardDAO();
     Board board = boardDAO.getBoard(boardId);
 %>
@@ -48,7 +44,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <form method="post" action="UpdateActionServlet?boardId=<%=boardId%>">
+        <form method="post" action="ControllerServlet?commandType=update&boardId=<%=boardId%>">
             <table class="table" style="text-align: left; border: 1px solid #245269">
                 <thead>
                 <tr>
@@ -87,7 +83,7 @@
                     </tr>
                 </table>
             </table>
-            <a href="view.jsp?boardId=<%=boardId%>" class="btn btn-default">취소</a>
+            <a href="ControllerServlet?commandType=view&boardId=<%=boardId%>" class="btn btn-default">취소</a>
             <input type="submit" class="btn btn-primary pull-right" value="저장">
         </form>
     </div>

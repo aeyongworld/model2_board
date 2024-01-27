@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dto.Board" %>
-<%@ page import="dao.BoardDAO" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,11 +16,9 @@
 </head>
 <body>
 <%
-    // 서블릿에서 전달한 데이터 받아오기
-//    BoardDAO boardDAO = (BoardDAO) request.getAttribute("boardDAO");
+    // 커맨드에서 전달한 데이터 받아오기
     ArrayList<Board> list = (ArrayList<Board>) request.getAttribute("boardList");
 %>
-
 <nav class="navbar navbar-default">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed"
@@ -36,11 +33,10 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li><a href="main.jsp">메인</a> </li>
-            <li class="active"><a href="BoardServlet">게시판</a> </li>
+            <li class="active"><a href="ControllerServlet?commandType=board">게시판</a></li>
         </ul>
     </div>
 </nav>
-
 <div class="container">
     <div class="row">
         <table class="table table-striped" style="text-align: center; border: 1px solid #245269">
@@ -61,7 +57,7 @@
             %>
             <tr>
                 <td><%= list.get(i).getCategoryName() %></td>
-                <td><a href="ViewServlet?boardId=<%= list.get(i).getBoardId() %>"><span style="text-decoration: underline;"><%= list.get(i).getTitle() %></span></a></td>
+                <td><a href="ControllerServlet?commandType=view&boardId=<%= list.get(i).getBoardId() %>"><span style="text-decoration: underline;"><%= list.get(i).getTitle() %></span></a></td>
                 <td><%= list.get(i).getUsername() %></td>
                 <td><%= list.get(i).getViewCount() %></td>
                 <td><%= list.get(i).getCreatedDate().substring(0, 16) %></td>
@@ -76,7 +72,6 @@
         <a href="write.jsp" class="btn btn-primary pull-right">등록</a>
     </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 </body>
